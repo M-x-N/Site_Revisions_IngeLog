@@ -133,3 +133,4 @@ Modifiez le fichier `data/questions.ts` pour ajouter de nouvelles questions :
 ## ✨ UPDATE *(by Kilian & Copilot again)*
 
 - Ajout d'un bouton et d'un fichier **ScrollToDown** pour allez en bas de la page sur la fiche etc...
+- Ajout d'un filtre pour selectionner un thème comme ca on fait que les questions du theme selectionné.
