@@ -6,6 +6,7 @@ import { questions } from '@/data/questions';
 import { Question } from '@/types/question';
 import Link from 'next/link';
 import { useState } from 'react';
+import ScrollToBottom from '@/components/ScrollToBottom';
 
 export default function FichesPage() {
   const [selectedTheme, setSelectedTheme] = useState<string | null>(null);
@@ -151,6 +152,8 @@ export default function FichesPage() {
             Commencer le quiz
           </Link>
         </div>
+
+        <ScrollToBottom />
       </div>
     </div>
   );

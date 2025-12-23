@@ -129,3 +129,7 @@ Modifiez le fichier `data/questions.ts` pour ajouter de nouvelles questions :
 - **TypeScript** - Typage statique
 - **Tailwind CSS** - Styling moderne
 - **React** - Bibliothèque UI
+
+## ✨ UPDATE *(by Kilian & Copilot again)*
+
+- Ajout d'un bouton et d'un fichier **ScrollToDown** pour allez en bas de la page sur la fiche etc...

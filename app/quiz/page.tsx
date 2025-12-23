@@ -9,6 +9,7 @@ import { questions } from '@/data/questions';
 import { Question } from '@/types/question';
 import { UserAnswer, calculateCanadianScore, getMaxScore, getMinScore } from '@/types/userAnswer';
 import { useState } from 'react';
+import ScrollToBottom from '@/components/ScrollToBottom';
 
 /**
  * Utility: returns a shuffled copy of array
@@ -200,6 +201,7 @@ export default function QuizPage() {
             <HomeButton className="mt-4" />
           </div>
         </div>
+        <ScrollToBottom />
       </div>
     );
   }
