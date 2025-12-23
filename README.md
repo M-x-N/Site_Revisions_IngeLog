@@ -6,6 +6,7 @@ Site web de révision pour la matière **Ingénierie Logicielle** (M1) avec des 
 
 - Max (Site)
 - Mael (Notes fiches)
+- Kilian
 
 ## 📊 Système de Notation Canadienne
 
@@ -18,6 +19,7 @@ Contrairement aux QCM classiques, ce système permet plusieurs bonnes réponses 
 ### Exemple
 
 **Question** : 2 + 2 = ?
+
 - a) = 2
 - b) = 4 ✓
 - c) < 0
@@ -25,23 +27,23 @@ Contrairement aux QCM classiques, ce système permet plusieurs bonnes réponses 
 
 Bonnes réponses : **b** et **d**
 
-| Réponses cochées | Score |
-|-----------------|-------|
-| b et d | +2 (max) |
-| a et c | -2 (min) |
-| a, b, c, d | 0 |
-| b uniquement | +1 |
-| a et b | 0 (+1 -1) |
+| Réponses cochées | Score     |
+| ---------------- | --------- |
+| b et d           | +2 (max)  |
+| a et c           | -2 (min)  |
+| a, b, c, d       | 0         |
+| b uniquement     | +1        |
+| a et b           | 0 (+1 -1) |
 
 ## 📖 Thèmes Couverts
 
-| Thème | Concepts |
-|-------|----------|
-| **Domain Driven Design** | Ubiquitous Language, Entities, Value Objects, Aggregates, Bounded Context, Repositories, ACL |
-| **Test Driven Development** | Cycle Red-Green-Refactor, JUnit, AssertJ, Mockito, Anti-patterns |
-| **Inversion of Control** | Dependency Injection, @Bean, @Autowired, @Scope, Spring annotations |
-| **REST API** | Richardson Maturity Model, HTTP Verbs, Status Codes, HATEOAS |
-| **Spring Cloud** | Service Registry, Service Discovery, Architecture distribuée |
+| Thème                       | Concepts                                                                                     |
+| --------------------------- | -------------------------------------------------------------------------------------------- |
+| **Domain Driven Design**    | Ubiquitous Language, Entities, Value Objects, Aggregates, Bounded Context, Repositories, ACL |
+| **Test Driven Development** | Cycle Red-Green-Refactor, JUnit, AssertJ, Mockito, Anti-patterns                             |
+| **Inversion of Control**    | Dependency Injection, @Bean, @Autowired, @Scope, Spring annotations                          |
+| **REST API**                | Richardson Maturity Model, HTTP Verbs, Status Codes, HATEOAS                                 |
+| **Spring Cloud**            | Service Registry, Service Discovery, Architecture distribuée                                 |
 
 ## 📚 Sources
 
@@ -130,7 +132,7 @@ Modifiez le fichier `data/questions.ts` pour ajouter de nouvelles questions :
 - **Tailwind CSS** - Styling moderne
 - **React** - Bibliothèque UI
 
-## ✨ UPDATE *(by Kilian & Copilot again)*
+## ✨ UPDATE _(Kilian)_
 
 - Ajout d'un bouton et d'un fichier **ScrollToDown** pour allez en bas de la page sur la fiche etc...
 - Ajout d'un filtre pour selectionner un thème comme ca on fait que les questions du theme selectionné.
