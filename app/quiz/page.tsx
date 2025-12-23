@@ -41,6 +41,14 @@ function withShuffledChoices(q: Question): Question {
   };
 }
 
+const subjects = [
+  'Domain Driven Design',
+  'Test Driven Development',
+  'IoC',
+  'REST API',
+  'Spring Cloud',
+];
+
 export default function QuizPage() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedQuestionCount, setSelectedQuestionCount] = useState<number>(10);
@@ -48,6 +56,7 @@ export default function QuizPage() {
   const [userAnswers, setUserAnswers] = useState<UserAnswer[]>([]);
   const [isStarted, setIsStarted] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
+  const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
 
   const handleAnswer = (selectedIndices: number[]) => {
     const currentQuestion = shuffledQuestions[currentQuestionIndex];
@@ -68,13 +77,30 @@ export default function QuizPage() {
     }
   };
 
+  const toggleSubject = (subject: string) => {
+    setSelectedSubjects((prev) =>
+      prev.includes(subject)
+        ? prev.filter((s) => s !== subject) // Remove subject if already selected
+        : [...prev, subject] // Add subject if not selected
+    );
+  };
+
+  const filteredQuestions = selectedSubjects.length
+    ? questions.filter((q) => selectedSubjects.includes(q.theme))
+    : questions;
+
   const handleStart = () => {
-    // First: shuffle the questions and select the requested count
-    const shuffled = shuffleArray([...questions]);
+    // Filter questions based on selected subjects
+    const filtered = selectedSubjects.length
+      ? questions.filter((q) => selectedSubjects.includes(q.theme))
+      : questions;
+
+    // Shuffle the filtered questions and select the requested count
+    const shuffled = shuffleArray([...filtered]);
     const selected = shuffled.slice(0, selectedQuestionCount);
 
-    // Then: for each selected question, shuffle choices and remap correctAnswers
-    const remapped = selected.map(q => withShuffledChoices(q));
+    // Shuffle choices and remap correct answers for each question
+    const remapped = selected.map((q) => withShuffledChoices(q));
 
     setShuffledQuestions(remapped);
     setUserAnswers([]);
@@ -145,13 +171,26 @@ export default function QuizPage() {
             <h2 className="text-xl font-semibold text-gray-700 mb-3">Thèmes couverts :</h2>
             <div className="flex flex-wrap justify-center gap-2">
               {Array.from(new Set(questions.map(q => q.theme))).map(theme => (
-                <span
+                <button
                   key={theme}
-                  className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium"
+                  onClick={() => toggleSubject(theme)}
+                  className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                    selectedSubjects.includes(theme)
+                      ? 'bg-purple-600 text-white shadow-lg scale-105'
+                      : 'bg-purple-100 text-purple-800 hover:bg-purple-200'
+                  }`}
                 >
                   {theme}
-                </span>
+                </button>
               ))}
+              {selectedSubjects.length > 0 && (
+                <button
+                  onClick={() => setSelectedSubjects([])}
+                  className="px-4 py-2 rounded-lg font-medium bg-red-500 text-white hover:bg-red-600 transition-all duration-200"
+                >
+                  Effacer le filtre
+                </button>
+              )}
             </div>
           </div>
 
