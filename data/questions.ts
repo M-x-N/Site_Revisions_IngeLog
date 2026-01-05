@@ -764,5 +764,421 @@ export const questions: Question[] = [
     ],
     correctAnswers: [0, 1, 3],
     explanation: "Les échanges fréquents alignent le code avec le business, construisent le langage commun et améliorent la compréhension. Le but n'est pas uniquement de réduire les coûts."
+  },
+
+  // =============================================
+  // QUESTIONS FOURBES - ET OUI BANDE DE SALIGOS
+  // =============================================
+
+  // --- REST API : Questions à 1 seule réponse ---
+  {
+    id: 100,
+    theme: "REST API",
+    question: "Que signifie l'acronyme REST ?",
+    choices: [
+      "Remote Execution State Transfer",
+      "Representational State Transfer",
+      "Resource Exchange Standard Technology",
+      "Request-response Endpoint Service Transfer"
+    ],
+    correctAnswers: [1],
+    explanation: "REST = Representational State Transfer, une architecture pour les APIs web utilisant HTTP."
+  },
+  {
+    id: 101,
+    theme: "REST API",
+    question: "Quel code HTTP DOIT être retourné après une création réussie avec POST ?",
+    choices: [
+      "200 OK",
+      "201 Created",
+      "204 No Content",
+      "202 Accepted"
+    ],
+    correctAnswers: [1],
+    explanation: "201 Created est le code approprié pour une création réussie. 200 OK indique un succès général, 204 est pour un succès sans body."
+  },
+  {
+    id: 102,
+    theme: "REST API",
+    question: "Quel code HTTP retourner pour un DELETE réussi sur une ressource existante (sans body de retour) ?",
+    choices: [
+      "200 OK",
+      "201 Created",
+      "204 No Content",
+      "404 Not Found"
+    ],
+    correctAnswers: [2],
+    explanation: "204 No Content est le code approprié pour un DELETE réussi sans contenu de retour. 200 OK implique un body dans la réponse."
+  },
+  {
+    id: 103,
+    theme: "REST API",
+    question: "Quel code retourner si on essaie de modifier une ressource qui n'existe pas avec PUT ?",
+    choices: [
+      "400 Bad Request",
+      "404 Not Found",
+      "204 No Content",
+      "500 Internal Server Error"
+    ],
+    correctAnswers: [1],
+    explanation: "404 Not Found car la ressource ciblée n'existe pas. 400 serait pour une requête mal formée."
+  },
+
+  // --- Spring IoC : Questions à 1 seule réponse ---
+  {
+    id: 104,
+    theme: "Inversion of Control",
+    question: "Quel est le scope par DÉFAUT d'un bean Spring ?",
+    choices: [
+      "prototype",
+      "request",
+      "singleton",
+      "session"
+    ],
+    correctAnswers: [2],
+    explanation: "Le scope par défaut est 'singleton' : une seule instance par conteneur Spring."
+  },
+  {
+    id: 105,
+    theme: "Inversion of Control",
+    question: "Comment Spring génère-t-il automatiquement les requêtes dans un Repository ?",
+    choices: [
+      "En analysant le code source à la compilation",
+      "En déduisant la requête du nom de la méthode",
+      "En lisant les annotations SQL",
+      "En utilisant un fichier de configuration XML"
+    ],
+    correctAnswers: [1],
+    explanation: "Spring Data déduit la requête à partir du nom de la méthode (ex: findByFirstname génère SELECT * WHERE firstname = ?)."
+  },
+
+  // --- Mockito : Questions à 2 réponses ---
+  {
+    id: 106,
+    theme: "Test Driven Development",
+    question: "Quelles syntaxes Mockito permettent de vérifier qu'une méthode n'a JAMAIS été appelée ?",
+    choices: [
+      "verify(mock, times(0)).method()",
+      "verify(mock, never()).method()",
+      "verifyNever(mock).method()",
+      "assertNever(mock.method())"
+    ],
+    correctAnswers: [0, 1],
+    explanation: "times(0) et never() sont équivalents en Mockito pour vérifier qu'une méthode n'a pas été appelée."
+  },
+  {
+    id: 107,
+    theme: "Test Driven Development",
+    question: "Quelles annotations sont OBLIGATOIRES pour un test unitaire avec Mockito (JUnit 5) ?",
+    choices: [
+      "@ExtendWith(MockitoExtension.class)",
+      "@Mock sur les dépendances",
+      "@SpringBootTest",
+      "@InjectMocks sur la classe testée"
+    ],
+    correctAnswers: [0, 1],
+    explanation: "@ExtendWith et @Mock sont essentiels. @SpringBootTest est pour les tests d'intégration, pas les tests unitaires. @InjectMocks est utile mais pas toujours obligatoire."
+  },
+  {
+    id: 108,
+    theme: "Test Driven Development",
+    question: "Concernant ArgumentCaptor en Mockito, quelles affirmations sont vraies ?",
+    choices: [
+      "Il permet de capturer les arguments passés à une méthode mockée",
+      "Il s'utilise avec @Captor ou ArgumentCaptor.forClass()",
+      "Il remplace les assertions AssertJ",
+      "On récupère la valeur capturée avec captor.getValue()"
+    ],
+    correctAnswers: [0, 1, 3],
+    explanation: "ArgumentCaptor capture les arguments pour les vérifier ensuite. Il complète AssertJ, ne le remplace pas."
+  },
+
+  // --- Code Java/Spring : Questions pièges ---
+  {
+    id: 109,
+    theme: "Inversion of Control",
+    question: "Quel Repository Spring Data est correctement défini ?",
+    choices: [
+      "public interface FeatureRepo extends CrudRepository<Feature, String> {}",
+      "public class FeatureRepo extends CrudRepository<Feature, String> {}",
+      "public interface FeatureRepo implements CrudRepository<Feature, String> {}",
+      "@Repository public abstract class FeatureRepo extends CrudRepository<Feature, String> {}"
+    ],
+    correctAnswers: [0],
+    explanation: "Un Repository Spring Data DOIT être une interface qui EXTENDS CrudRepository (ou JpaRepository). Une classe ne peut pas hériter d'une interface."
+  },
+  {
+    id: 110,
+    theme: "Inversion of Control",
+    question: "Quelle(s) annotation(s) peuvent être utilisées pour injecter une dépendance ?",
+    choices: [
+      "@Autowired",
+      "@Inject",
+      "@Resource",
+      "@Dependency"
+    ],
+    correctAnswers: [0, 1, 2],
+    explanation: "@Autowired (Spring), @Inject (JSR-330), et @Resource (JSR-250) permettent l'injection. @Dependency n'existe pas."
+  },
+  {
+    id: 111,
+    theme: "REST API",
+    question: "Dans un @RestController, comment retourner un code 201 avec l'URL de la ressource créée ?",
+    choices: [
+      "return ResponseEntity.ok(resource);",
+      "return ResponseEntity.created(URI.create(\"/path\")).build();",
+      "return new ResponseEntity<>(HttpStatus.CREATED);",
+      "return ResponseEntity.status(201).body(resource);"
+    ],
+    correctAnswers: [1],
+    explanation: "ResponseEntity.created(uri).build() retourne 201 avec le header Location. La méthode ok() retourne 200, pas 201."
+  },
+  {
+    id: 112,
+    theme: "REST API",
+    question: "Quelles méthodes HTTP sont idempotentes ?",
+    choices: [
+      "GET",
+      "POST",
+      "PUT",
+      "DELETE"
+    ],
+    correctAnswers: [0, 2, 3],
+    explanation: "GET, PUT et DELETE sont idempotents (même résultat si répétés). POST n'est PAS idempotent (crée une nouvelle ressource à chaque appel)."
+  },
+
+  // --- DDD : Questions pièges ---
+  {
+    id: 113,
+    theme: "Domain Driven Design",
+    question: "En DDD, qu'est-ce qui distingue une Entity d'un Value Object ?",
+    choices: [
+      "L'Entity a une identité unique qui persiste",
+      "Le Value Object est défini par ses attributs, pas son identité",
+      "L'Entity est toujours mutable, le Value Object jamais",
+      "Le Value Object n'a pas d'identité propre"
+    ],
+    correctAnswers: [0, 1, 3],
+    explanation: "L'Entity a une identité, le Value Object est défini par ses attributs. Mais l'Entity n'est pas TOUJOURS mutable (elle peut avoir des champs finaux)."
+  },
+  {
+    id: 114,
+    theme: "Domain Driven Design",
+    question: "Dans le TP Feature Flipping, la classe Feature est-elle une Entity ou un Value Object ?",
+    choices: [
+      "Entity car elle a un attribut 'name' qui sert d'identifiant",
+      "Value Object car elle est immuable",
+      "Entity car equals() compare uniquement le 'name'",
+      "Value Object car elle n'a pas d'annotation @Entity"
+    ],
+    correctAnswers: [0, 2],
+    explanation: "Feature est une Entity : elle a un champ 'name' qui sert d'identité, et equals() compare uniquement le 'name'. L'annotation @Entity n'est pas requise au niveau domain."
+  },
+
+  // --- Tests : Questions sur les bonnes pratiques ---
+  {
+    id: 115,
+    theme: "Test Driven Development",
+    question: "Pourquoi les tests dans le TP utilisent-ils @Nested ?",
+    choices: [
+      "Pour grouper les tests par fonctionnalité/méthode testée",
+      "Pour améliorer la lisibilité des rapports de test",
+      "C'est obligatoire avec JUnit 5",
+      "Pour partager un setup commun entre tests liés"
+    ],
+    correctAnswers: [0, 1],
+    explanation: "@Nested permet de grouper les tests et améliore la lisibilité. Ce n'est pas obligatoire et ne permet pas de partager le setup automatiquement."
+  },
+  {
+    id: 116,
+    theme: "Test Driven Development",
+    question: "Dans le test du contrôleur : 'verify(service, times(0)).saveFeature(any())' signifie ?",
+    choices: [
+      "Vérifier que saveFeature n'a jamais été appelée",
+      "Sauvegarder le feature 0 fois",
+      "Vérifier que saveFeature a été appelée au moins une fois",
+      "Attendre que saveFeature soit appelée"
+    ],
+    correctAnswers: [0],
+    explanation: "times(0) vérifie que la méthode n'a PAS été appelée. C'est utilisé pour s'assurer qu'en cas d'erreur, on ne sauvegarde pas."
+  },
+
+  // --- Spring annotations : Questions à 2 réponses ---
+  {
+    id: 117,
+    theme: "Inversion of Control",
+    question: "Quelles annotations marquent une classe comme composant géré par Spring ?",
+    choices: [
+      "@Component",
+      "@Service",
+      "@Bean",
+      "@Repository"
+    ],
+    correctAnswers: [0, 1, 3],
+    explanation: "@Component, @Service (logique métier), et @Repository (accès données) sont des stéréotypes. @Bean est pour les méthodes, pas les classes."
+  },
+  {
+    id: 118,
+    theme: "Inversion of Control",
+    question: "Quelle est la différence entre @Service et @Repository ?",
+    choices: [
+      "@Service indique une logique métier",
+      "@Repository indique un accès aux données",
+      "@Repository offre une traduction automatique des exceptions",
+      "Ils sont totalement interchangeables sans différence"
+    ],
+    correctAnswers: [0, 1, 2],
+    explanation: "@Service = logique métier, @Repository = accès données avec traduction des exceptions. Ils ne sont PAS interchangeables, ils ont une sémantique différente."
+  },
+
+  // --- REST : Codes de retour pièges ---
+  {
+    id: 119,
+    theme: "REST API",
+    question: "Quels codes HTTP indiquent un succès SANS body dans la réponse ?",
+    choices: [
+      "200 OK",
+      "201 Created",
+      "204 No Content",
+      "202 Accepted"
+    ],
+    correctAnswers: [2],
+    explanation: "SEUL 204 No Content indique explicitement l'absence de body. 200, 201 et 202 peuvent tous avoir un body."
+  },
+  {
+    id: 120,
+    theme: "REST API",
+    question: "Différence entre 401 Unauthorized et 403 Forbidden ?",
+    choices: [
+      "401 = authentification manquante ou invalide",
+      "403 = authentifié mais pas autorisé",
+      "401 = interdit d'accéder",
+      "403 = authentification expirée"
+    ],
+    correctAnswers: [0, 1],
+    explanation: "401 = pas authentifié (ou token invalide). 403 = authentifié mais pas les droits. C'est une distinction importante !"
+  },
+
+  // --- Parser/Expression : Questions du TP ---
+  {
+    id: 121,
+    theme: "Domain Driven Design",
+    question: "Dans le TP, l'expression 'dev & admin | guest' est parsée dans quel ordre ?",
+    choices: [
+      "((dev & admin) | guest) car & a priorité sur |",
+      "(dev & (admin | guest)) car | a priorité sur &",
+      "De gauche à droite sans priorité",
+      "Erreur de parsing"
+    ],
+    correctAnswers: [0],
+    explanation: "L'opérateur & (AND) a priorité sur | (OR), comme en mathématiques et en programmation. Donc (dev & admin) | guest."
+  },
+  {
+    id: 122,
+    theme: "Domain Driven Design",
+    question: "Que retourne RoleExpression.toPredicate() ?",
+    choices: [
+      "Un Predicate<UserRoles> pour tester les rôles",
+      "Un boolean directement",
+      "Une liste de rôles",
+      "Un String représentant l'expression"
+    ],
+    correctAnswers: [0],
+    explanation: "toPredicate() retourne un Predicate<UserRoles> qui peut être testé avec .test(userRoles). stringify() retourne le String."
+  },
+
+  // --- Validation : Questions code ---
+  {
+    id: 123,
+    theme: "Domain Driven Design",
+    question: "Dans le TP, comment la classe Feature valide-t-elle son nom ?",
+    choices: [
+      "Dans le constructeur avec IllegalArgumentException si null/blank",
+      "Avec une annotation @NotNull",
+      "Dans une méthode validate() séparée",
+      "Par un Validator externe"
+    ],
+    correctAnswers: [0],
+    explanation: "La validation est dans le constructeur : 'if (name == null || name.isBlank()) throw new IllegalArgumentException()'. C'est le pattern DDD recommandé."
+  },
+  {
+    id: 124,
+    theme: "REST API",
+    question: "Pourquoi le contrôleur utilise StringUtils.hasText() plutôt que != null ?",
+    choices: [
+      "Pour vérifier que le string n'est pas null ET pas vide/blanc",
+      "Pour améliorer les performances",
+      "C'est une convention Spring obligatoire",
+      "Pour éviter les NullPointerException"
+    ],
+    correctAnswers: [0, 3],
+    explanation: "hasText() vérifie que le string n'est pas null, pas vide, et pas composé uniquement d'espaces. Cela évite aussi les NPE."
+  },
+
+  // --- Questions très fourbes : 1 seule réponse ---
+  {
+    id: 125,
+    theme: "REST API",
+    question: "Dans le TP, que retourne POST /features si le nom est vide ?",
+    choices: [
+      "200 OK",
+      "201 Created",
+      "400 Bad Request",
+      "422 Unprocessable Entity"
+    ],
+    correctAnswers: [2],
+    explanation: "Le contrôleur retourne 400 Bad Request pour les données invalides (nom vide, expression invalide)."
+  },
+  {
+    id: 126,
+    theme: "REST API",
+    question: "PUT /features/{name} avec un body contenant un nom différent retourne ?",
+    choices: [
+      "200 OK avec mise à jour",
+      "201 Created",
+      "400 Bad Request",
+      "404 Not Found"
+    ],
+    correctAnswers: [2],
+    explanation: "Le contrôleur vérifie que id.equals(featureBean.name), sinon 400 Bad Request. Le nom dans l'URL et le body doivent correspondre."
+  },
+  {
+    id: 127,
+    theme: "Test Driven Development",
+    question: "Dans AssertJ, quelle assertion vérifie qu'une collection contient exactement les éléments attendus, dans n'importe quel ordre ?",
+    choices: [
+      "containsExactly()",
+      "containsExactlyInAnyOrder()",
+      "contains()",
+      "hasSameElementsAs()"
+    ],
+    correctAnswers: [1],
+    explanation: "containsExactlyInAnyOrder() vérifie les mêmes éléments sans ordre. containsExactly() impose l'ordre. contains() n'est pas exact."
+  },
+  {
+    id: 128,
+    theme: "Inversion of Control",
+    question: "Pourquoi l'injection par constructeur est-elle préférée à @Autowired sur un champ ?",
+    choices: [
+      "Permet l'immutabilité avec des champs final",
+      "Facilite les tests unitaires (pas besoin de Spring)",
+      "Est obligatoire en Spring 6",
+      "Rend les dépendances explicites"
+    ],
+    correctAnswers: [0, 1, 3],
+    explanation: "L'injection par constructeur permet les champs final, facilite les tests, et rend les dépendances explicites. Ce n'est pas obligatoire en Spring 6."
+  },
+  {
+    id: 129,
+    theme: "REST API",
+    question: "Le contrôleur du TP retourne ResponseEntity.noContent().build() pour DELETE. Quel code HTTP cela génère ?",
+    choices: [
+      "200 OK",
+      "202 Accepted",
+      "204 No Content",
+      "205 Reset Content"
+    ],
+    correctAnswers: [2],
+    explanation: "noContent() génère un 204 No Content, approprié pour un DELETE réussi sans body de retour."
   }
 ];
