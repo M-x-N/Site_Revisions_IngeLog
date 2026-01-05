@@ -4,12 +4,12 @@ import HomeButton from '@/components/HomeButton';
 import QuestionCard from '@/components/QuestionCard';
 import ResultsDisplay from '@/components/ResultsDisplay';
 import ScoreDisplay from '@/components/ScoreDisplay';
+import ScrollToBottom from '@/components/ScrollToBottom';
 import ThemeStats from '@/components/ThemeStats';
 import { questions } from '@/data/questions';
 import { Question } from '@/types/question';
 import { UserAnswer, calculateCanadianScore, getMaxScore, getMinScore } from '@/types/userAnswer';
 import { useState } from 'react';
-import ScrollToBottom from '@/components/ScrollToBottom';
 
 /**
  * Utility: returns a shuffled copy of array
@@ -57,6 +57,7 @@ export default function QuizPage() {
   const [isStarted, setIsStarted] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
   const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
+  const [onlyNewQuestions, setOnlyNewQuestions] = useState(false);
 
   const handleAnswer = (selectedIndices: number[]) => {
     const currentQuestion = shuffledQuestions[currentQuestionIndex];
@@ -85,18 +86,22 @@ export default function QuizPage() {
     );
   };
 
-  const filteredQuestions = selectedSubjects.length
-    ? questions.filter((q) => selectedSubjects.includes(q.theme))
-    : questions;
+  const filteredQuestions = (() => {
+    let filtered = questions;
+    // Filter by new questions if enabled
+    if (onlyNewQuestions) {
+      filtered = filtered.filter((q) => q.id >= 100);
+    }
+    // Filter by selected themes
+    if (selectedSubjects.length) {
+      filtered = filtered.filter((q) => selectedSubjects.includes(q.theme));
+    }
+    return filtered;
+  })();
 
   const handleStart = () => {
-    // Filter questions based on selected subjects
-    const filtered = selectedSubjects.length
-      ? questions.filter((q) => selectedSubjects.includes(q.theme))
-      : questions;
-
     // Shuffle the filtered questions and select the requested count
-    const shuffled = shuffleArray([...filtered]);
+    const shuffled = shuffleArray([...filteredQuestions]);
     const selected = shuffled.slice(0, selectedQuestionCount);
 
     // Shuffle choices and remap correct answers for each question
@@ -148,23 +153,55 @@ export default function QuizPage() {
               Nombre de questions
             </h2>
             <div className="flex flex-wrap justify-center gap-3 mb-4">
-              {[5, 10, 15, 20, 30, questions.length].map(count => (
+              {[5, 10, 15, 20, 30, filteredQuestions.length].map(count => (
                 <button
                   key={count}
-                  onClick={() => setSelectedQuestionCount(count)}
+                  onClick={() => setSelectedQuestionCount(Math.min(count, filteredQuestions.length))}
                   className={`px-6 py-2 rounded-lg font-semibold transition-all duration-200 ${
                     selectedQuestionCount === count
                       ? 'bg-blue-600 text-white shadow-lg scale-105'
                       : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                   }`}
                 >
-                  {count === questions.length ? 'Toutes' : count}
+                  {count === filteredQuestions.length ? 'Toutes' : count}
                 </button>
               ))}
             </div>
             <p className="text-sm text-gray-500">
-              {questions.length} questions disponibles au total
+              {filteredQuestions.length} questions disponibles avec les filtres actuels
             </p>
+          </div>
+
+          {/* Filtre nouvelles questions */}
+          <div className="mb-6">
+            <h2 className="text-xl font-semibold text-gray-700 mb-3">Niveau de difficulté :</h2>
+            <div className="flex flex-wrap justify-center gap-3">
+              <button
+                onClick={() => setOnlyNewQuestions(false)}
+                className={`px-6 py-2 rounded-lg font-semibold transition-all duration-200 ${
+                  !onlyNewQuestions
+                    ? 'bg-green-600 text-white shadow-lg scale-105'
+                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                }`}
+              >
+                📚 Toutes les questions ({questions.length})
+              </button>
+              <button
+                onClick={() => setOnlyNewQuestions(true)}
+                className={`px-6 py-2 rounded-lg font-semibold transition-all duration-200 ${
+                  onlyNewQuestions
+                    ? 'bg-orange-600 text-white shadow-lg scale-105'
+                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                }`}
+              >
+                🔥 Questions Avancées ({questions.filter(q => q.id >= 100).length})
+              </button>
+            </div>
+            {onlyNewQuestions && (
+              <p className="text-sm text-orange-600 mt-2">
+                Questions plus difficiles basées sur les TPs (pièges inclus !)
+              </p>
+            )}
           </div>
 
           <div className="mb-6">
