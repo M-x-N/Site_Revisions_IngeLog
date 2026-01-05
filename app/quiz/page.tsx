@@ -153,10 +153,10 @@ export default function QuizPage() {
               Nombre de questions
             </h2>
             <div className="flex flex-wrap justify-center gap-3 mb-4">
-              {[5, 10, 15, 20, 30, filteredQuestions.length].map(count => (
+              {[...new Set([5, 10, 15, 20, 30, filteredQuestions.length].filter(c => c <= filteredQuestions.length))].map(count => (
                 <button
                   key={count}
-                  onClick={() => setSelectedQuestionCount(Math.min(count, filteredQuestions.length))}
+                  onClick={() => setSelectedQuestionCount(count)}
                   className={`px-6 py-2 rounded-lg font-semibold transition-all duration-200 ${
                     selectedQuestionCount === count
                       ? 'bg-blue-600 text-white shadow-lg scale-105'
